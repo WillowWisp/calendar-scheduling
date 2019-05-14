@@ -1,0 +1,66 @@
+<div class="modal-header">
+  <h4 class="modal-title">Create New Event</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <form>
+      <div class="form-group">
+        <label for="eventTitle">
+          <h5>Tiêu đề</h5>
+        </label>
+        <input type="text" class="form-control" id="eventTitle" placeholder="Nhập tiêu đề sự kiện"
+          [(ngModel)]="currentEvent.title" name="eventTitle">
+      </div>
+
+      <div class="form-group">
+        <label for="eventColor">
+          <h5>Chọn màu</h5>
+        </label>
+        <input type="color" class="form-control" id="eventColor"
+          [(ngModel)]="currentEvent.hexColor" name="eventColor">
+      </div>
+
+      <div class="form-group">
+        <label for="repeatPlan">
+          <h5>Kế hoạch lặp lịch</h5>
+        </label>
+        <select class="form-control" id="repeatPlan" [(ngModel)]="currentEvent.repeatPlan" name="repeatPlan">
+          <option class="font-weight-bold" value="" selected disabled>Chọn kế hoạch lặp lịch</option>
+          <option value="daily">Nhiều lần trong 1 ngày</option>
+          <option value="weekly">Nhiều ngày trong 1 tuần</option>
+          <option value="monthly">Nhiều ngày trong 1 tháng</option>
+          <option value="annually">Nhiều ngày trong 1 năm</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <h5>Ngày Giờ</h5>
+        </label>
+        <div *ngFor="let item of dayList" class="row mb-2">
+          <div class="col-10 pr-1">
+            <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="dayList[dayList.indexOf(item)]"
+              [ngModelOptions]="{standalone: true}" [altInput]="true"
+              [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i"
+              placeholder="Not set" />
+          </div>
+          <div class="col-2 pl-1">
+            <button class="btn btn-danger btn-block" (click)="removeDayByIndex(item)">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-outline-secondary btn-block" (click)="increaseNumberOfDays()">
+          <i class="fa fa-plus"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="submit" class="btn btn-primary" (click)="saveEvent()">Lưu</button>
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss()">Hủy bỏ</button>
+</div>

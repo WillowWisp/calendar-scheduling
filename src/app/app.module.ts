@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { CalendarPageComponent } from './calendar-page/calendar-page.component';
+import { CreateCalendarEventModalComponent} from './calendar-page/create-calendar-event-modal/create-calendar-event-modal.component';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -15,8 +16,10 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarPageComponent
+    CalendarPageComponent,
+    CreateCalendarEventModalComponent
   ],
+  entryComponents: [CreateCalendarEventModalComponent],
   imports: [
     BrowserModule,
     FormsModule,

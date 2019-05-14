@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 
+import { CreateCalendarEventModalComponent } from './create-calendar-event-modal/create-calendar-event-modal.component';
+
 import { MyEvent } from '../models/myEvent';
 
 const colors: any = {
@@ -29,60 +31,7 @@ const colors: any = {
   styleUrls: ['./calendar-page.component.css']
 })
 export class CalendarPageComponent implements OnInit {
-  dayList: Date[] = [new Date()];
-  currentEvent: MyEvent = new MyEvent();
   myEvents: MyEvent[] = [];
-  testDisplay: string;
-
-  increaseNumberOfDays = () => {
-    this.dayList.push(new Date());
-  }
-
-  removeDayByIndex = (item: Date) => {
-    const index = this.dayList.indexOf(item);
-    this.dayList.splice(index, 1);
-  }
-
-  saveEvent = () => {
-    this.dayList.forEach((item) => {
-      for (let i = 0; i < 500; i++) {
-        let dateToAdd = new Date(item);
-        dateToAdd = addWeeks(item, i);
-
-        this.currentEvent.calendarEvents.push({
-          id: this.currentEvent.id,
-          start: dateToAdd,
-          title: this.currentEvent.title,
-          color: colors.red,
-          actions: this.actions,
-          allDay: false,
-          resizable: {
-            beforeStart: false,
-            afterEnd: false
-          },
-          draggable: false
-        });
-      }
-    });
-
-    this.myEvents.push(this.currentEvent);
-
-    this.loadEventsToCalendar();
-  }
-
-  cancelModal = () => {
-    // this.dayList.forEach((item) => {
-    //   console.log(item);
-    // });
-
-    console.log(this.currentEvent);
-  }
-
-  loadEventsToCalendar = () => {
-    this.myEvents.forEach((item) => {
-      this.events = this.events.concat(item.calendarEvents);
-    });
-  }
 
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
 
@@ -160,11 +109,26 @@ export class CalendarPageComponent implements OnInit {
   //   }
   // ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen = true;
 
   constructor(private modal: NgbModal) {}
 
   ngOnInit() {
+  }
+
+  openCreateEventModal() {
+    const modalRef = this.modal.open(CreateCalendarEventModalComponent, { size: 'lg' });
+    modalRef.componentInstance.change.subscribe(($e) => {
+      this.myEvents.push($e);
+      this.loadEventsToCalendar();
+    });
+  }
+
+  loadEventsToCalendar = () => {
+    this.events = [];
+    this.myEvents.forEach((item) => {
+      this.events = this.events.concat(item.calendarEvents);
+    });
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -224,7 +188,4 @@ export class CalendarPageComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  openModal(content) {
-    this.modal.open(content, { size: 'lg' });
-  }
 }
