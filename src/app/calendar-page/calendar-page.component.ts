@@ -223,4 +223,8 @@ export class CalendarPageComponent implements OnInit {
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  openModal(content) {
+    this.modal.open(content, { size: 'lg' });
+  }
 }
