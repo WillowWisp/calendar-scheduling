@@ -142,90 +142,90 @@
         </tr>
       </tbody>
     </table>
-  </div>
-</div> -->
-  <div style="display: flex; margin: 30px 20px 0 0;justify-content:flex-end;">
-    <button class="btn btn-lg btn-primary" (click)="openModal(eventModifyModal)">New Event</button>
-  </div>
+  </div> -->
+</div>
+<div style="display: flex; margin: 30px 20px 0 0;justify-content:flex-end;">
+  <button class="btn btn-lg btn-primary" (click)="openModal(eventModifyModal)">New Event</button>
+</div>
 
-  <ng-template #eventModifyModal let-modal>
-    <div class="container pl-5 pr-5 pt-5 pb-5">
-      <form>
-        <div class="form-group">
-          <label for="eventTitle">
-            <h3>Tiêu Đề Sự Kiện {{currentEvent.title}}</h3>
-          </label>
-          <input type="text" class="form-control" id="eventTitle" placeholder="Nhập Tiêu Đề"
-            [(ngModel)]="currentEvent.title" name="eventTitle">
-        </div>
+<ng-template #eventModifyModal let-modal>
+  <div class="container pl-5 pr-5 pt-5 pb-5">
+    <form>
+      <div class="form-group">
+        <label for="eventTitle">
+          <h3>Tiêu Đề Sự Kiện {{currentEvent.title}}</h3>
+        </label>
+        <input type="text" class="form-control" id="eventTitle" placeholder="Nhập Tiêu Đề"
+          [(ngModel)]="currentEvent.title" name="eventTitle">
+      </div>
 
-        <div class="form-group">
-          <label for="repeatPlan">
-            <h3>Kế hoạch lặp lịch {{currentEvent.repeatPlan}}</h3>
-          </label>
-          <select class="form-control" id="repeatPlan" [(ngModel)]="currentEvent.repeatPlan" name="repeatPlan">
-            <option class="font-weight-bold" selected disabled>Chọn kế hoạch lặp lịch</option>
-            <option value="daily">Nhiều lần trong 1 ngày</option>
-            <option value="weekly">Nhiều ngày trong 1 tuần</option>
-            <option value="monthly">Nhiều ngày trong 1 tháng</option>
-            <option value="annually">Nhiều ngày trong 1 năm</option>
-          </select>
-        </div>
+      <div class="form-group">
+        <label for="repeatPlan">
+          <h3>Kế hoạch lặp lịch {{currentEvent.repeatPlan}}</h3>
+        </label>
+        <select class="form-control" id="repeatPlan" [(ngModel)]="currentEvent.repeatPlan" name="repeatPlan">
+          <option class="font-weight-bold" selected disabled>Chọn kế hoạch lặp lịch</option>
+          <option value="daily">Nhiều lần trong 1 ngày</option>
+          <option value="weekly">Nhiều ngày trong 1 tuần</option>
+          <option value="monthly">Nhiều ngày trong 1 tháng</option>
+          <option value="annually">Nhiều ngày trong 1 năm</option>
+        </select>
+      </div>
 
-        <div class="form-group">
-          <label>
-            <h3>Ngày Giờ</h3>
-          </label>
-          <div *ngFor="let item of dayList" class="row mb-2">
-            <div class="col-10 pr-1">
-              <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="dayList[dayList.indexOf(item)]"
-                [ngModelOptions]="{standalone: true}" (ngModelChange)="refresh.next()" [altInput]="true"
-                [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i"
-                placeholder="Not set" />
-            </div>
-            <div class="col-2 pl-1">
-              <button class="btn btn-danger btn-block" (click)="removeDayByIndex(item)">
-                <i class="fa fa-times"></i>
-              </button>
-            </div>
+      <div class="form-group">
+        <label>
+          <h3>Ngày Giờ</h3>
+        </label>
+        <div *ngFor="let item of dayList" class="row mb-2">
+          <div class="col-10 pr-1">
+            <input class="form-control" type="text" mwlFlatpickr [(ngModel)]="dayList[dayList.indexOf(item)]"
+              [ngModelOptions]="{standalone: true}" (ngModelChange)="refresh.next()" [altInput]="true"
+              [convertModelValue]="true" [enableTime]="true" dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i"
+              placeholder="Not set" />
           </div>
-          <button class="btn btn-success btn-block" (click)="increaseNumberOfDays()">
-            <i class="fa fa-plus"></i>
-          </button>
+          <div class="col-2 pl-1">
+            <button class="btn btn-danger btn-block" (click)="removeDayByIndex(item)">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg mt-5 mr-3" (click)="saveEvent()">Lưu</button>
-        <button type="button" class="btn btn-secondary btn-lg mt-5" (click)="cancelModal()">Hủy bỏ</button>
-      </form>
-    </div>
-  </ng-template>
-
-
-
-  <ng-template #modalContent let-close="close">
-    <div class="modal-header">
-      <h5 class="modal-title">Event action occurred</h5>
-      <button type="button" class="close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div>
-        Action:
-        <pre>{{ modalData?.action }}</pre>
+        <button class="btn btn-success btn-block" (click)="increaseNumberOfDays()">
+          <i class="fa fa-plus"></i>
+        </button>
       </div>
-      <div>
-        Event:
-        <pre>{{ modalData?.event | json }}</pre>
-      </div>
+      <button type="submit" class="btn btn-primary btn-lg mt-5 mr-3" (click)="saveEvent()">Lưu</button>
+      <button type="button" class="btn btn-secondary btn-lg mt-5" (click)="cancelModal()">Hủy bỏ</button>
+    </form>
+  </div>
+</ng-template>
+
+
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Event action occurred</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      Action:
+      <pre>{{ modalData?.action }}</pre>
     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-secondary" (click)="close()">
-        OK
-      </button>
+    <div>
+      Event:
+      <pre>{{ modalData?.event | json }}</pre>
     </div>
-  </ng-template>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      OK
+    </button>
+  </div>
+</ng-template>
 
 
 
 
-  <div style="margin-top: 500px;"></div>
+<div style="margin-top: 500px;"></div>

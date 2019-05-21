@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 
+import Utils from '../utils/utils';
+
 import { MyEvent } from '../models/myEvent';
 
 const colors: any = {
@@ -75,7 +77,10 @@ export class CalendarPageComponent implements OnInit {
     //   console.log(item);
     // });
 
-    console.log(this.currentEvent);
+    //console.log(this.currentEvent);
+    for (let i = 0; i < this.dayList.length; i++) {
+      console.log(Utils.DateToCron(this.dayList[i], 'monthly'));
+    }
   }
 
   loadEventsToCalendar = () => {
